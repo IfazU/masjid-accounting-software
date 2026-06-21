@@ -17,6 +17,7 @@ import {
   resolveTrendPercent,
   computeTotalTrendPercent,
 } from "@/lib/balanceTrends"
+import { motion } from "@/lib/design-tokens"
 
 export default async function DashboardPage() {
   const [summary, causes, donations, uncategorised, fundTrends, cumulativePoints, madrasahIntake] =
@@ -83,8 +84,9 @@ export default async function DashboardPage() {
                 totalPence={summary.totalPence}
                 changePercent={totalTrend}
                 periodLabel={periodLabel}
+                delay={0}
               />
-              {summary.balances.map((b) => (
+              {summary.balances.map((b, index) => (
                 <BalanceCard
                   key={b.donationType}
                   donationType={b.donationType}
@@ -96,6 +98,7 @@ export default async function DashboardPage() {
                     fundTrends
                   )}
                   periodLabel={periodLabel}
+                  delay={(index + 1) * motion.staggerCard}
                 />
               ))}
             </div>
@@ -124,7 +127,7 @@ export default async function DashboardPage() {
               {showChartSidebar && (
                 <div className="flex flex-col gap-4 lg:col-span-1">
                   {showMadrasah && madrasahIntake && (
-                    <MadrasahIntakeKpiCard data={madrasahIntake} />
+                    <MadrasahIntakeKpiCard data={madrasahIntake} delay={0} />
                   )}
                   {showFundChart && summary && (
                     <FundMixChart

@@ -1,6 +1,10 @@
+"use client"
+
+import { motion, useReducedMotion } from "framer-motion"
 import { FUND_CONFIG } from "@/lib/fundConfig"
 import { formatPence } from "@/lib/currency"
 import { formatTrendPercent } from "@/lib/balanceTrends"
+import { motion as motionTokens } from "@/lib/design-tokens"
 import { cn } from "@/lib/utils"
 import type { DonationType } from "@/lib/api"
 
@@ -9,6 +13,7 @@ interface BalanceCardProps {
   amountPence: number
   changePercent?: number | null
   periodLabel?: string
+  delay?: number
 }
 
 function TrendBadge({ value }: { value: number }) {
@@ -35,11 +40,20 @@ export function BalanceCard({
   amountPence,
   changePercent = null,
   periodLabel,
+  delay = 0,
 }: BalanceCardProps) {
   const cfg = FUND_CONFIG[donationType]
+  const reduceMotion = useReducedMotion()
 
   return (
-    <div
+    <motion.div
+      initial={reduceMotion ? false : motionTokens.entrance.initial}
+      animate={motionTokens.entrance.animate}
+      transition={{
+        duration: motionTokens.duration,
+        delay: reduceMotion ? 0 : delay,
+        ease: motionTokens.ease,
+      }}
       className="rounded-xl border border-border bg-card p-5 shadow-card"
       role="region"
       aria-label={`${cfg.label} fund balance`}
@@ -63,7 +77,7 @@ export function BalanceCard({
       {periodLabel && changePercent !== null && (
         <p className="mt-1.5 text-[10px] text-muted-foreground">{periodLabel}</p>
       )}
-    </div>
+    </motion.div>
   )
 }
 
@@ -71,15 +85,26 @@ interface TotalBalanceCardProps {
   totalPence: number
   changePercent?: number | null
   periodLabel?: string
+  delay?: number
 }
 
 export function TotalBalanceCard({
   totalPence,
   changePercent = null,
   periodLabel,
+  delay = 0,
 }: TotalBalanceCardProps) {
+  const reduceMotion = useReducedMotion()
+
   return (
-    <div
+    <motion.div
+      initial={reduceMotion ? false : motionTokens.entrance.initial}
+      animate={motionTokens.entrance.animate}
+      transition={{
+        duration: motionTokens.duration,
+        delay: reduceMotion ? 0 : delay,
+        ease: motionTokens.ease,
+      }}
       className="rounded-xl border border-primary/30 bg-card p-5 shadow-card ring-1 ring-primary/20"
       role="region"
       aria-label="Total classified fund balance"
@@ -94,6 +119,6 @@ export function TotalBalanceCard({
       {periodLabel && changePercent !== null && (
         <p className="mt-1.5 text-[10px] text-muted-foreground">{periodLabel}</p>
       )}
-    </div>
+    </motion.div>
   )
 }
