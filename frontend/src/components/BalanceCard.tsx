@@ -12,7 +12,7 @@ export function BalanceCard({ donationType, amountPence }: BalanceCardProps) {
 
   return (
     <div
-      className="rounded-lg border border-border bg-card shadow-sm overflow-hidden flex"
+      className="rounded-lg border border-border bg-card shadow-card overflow-hidden flex"
       role="region"
       aria-label={`${cfg.label} fund balance`}
     >
@@ -31,7 +31,7 @@ export function BalanceCard({ donationType, amountPence }: BalanceCardProps) {
             <p className="mt-0.5 text-xs text-muted-foreground">{cfg.description}</p>
           </div>
           {cfg.restricted && (
-            <span className="shrink-0 rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700 uppercase tracking-wider">
+            <span className="shrink-0 rounded-full bg-warning/15 px-2 py-0.5 text-[10px] font-semibold text-warning uppercase tracking-wider">
               Restricted
             </span>
           )}

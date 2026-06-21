@@ -57,7 +57,7 @@ export function DonationTable({ donations, causes, limit }: DonationTableProps) 
           {rows.map((d) => (
             <TableRow
               key={d.id}
-              className={d.donationType === "uncategorised" ? "bg-amber-50/60" : ""}
+              className={d.donationType === "uncategorised" ? "bg-warning/10" : ""}
             >
               <TableCell className="font-medium tabular-nums">
                 {formatPence(d.amountPence)}

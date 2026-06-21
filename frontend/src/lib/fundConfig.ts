@@ -4,7 +4,8 @@ export interface FundConfig {
   label: string
   description: string
   color: string    // text / border accent
-  bg: string       // light tinted background
+  bg: string       // tinted background (light contexts)
+  chartColor: string // segment colour for charts on dark backgrounds
   restricted: boolean
 }
 
@@ -12,64 +13,73 @@ export const FUND_CONFIG: Record<DonationType, FundConfig> = {
   zakat: {
     label: "Zakat",
     description: "Obligatory almsgiving (2.5% of savings)",
-    color: "#92400E",
-    bg: "#FFFBEB",
+    color: "#FBBF24",
+    bg: "#422006",
+    chartColor: "#FBBF24",
     restricted: true,
   },
   sadaqah: {
     label: "Sadaqah",
     description: "Voluntary charity",
-    color: "#166534",
-    bg: "#F0FDF4",
+    color: "#4ADE80",
+    bg: "#052E16",
+    chartColor: "#4ADE80",
     restricted: false,
   },
   lillah: {
     label: "Lillah",
     description: "For the sake of Allah",
-    color: "#3730A3",
-    bg: "#EEF2FF",
+    color: "#818CF8",
+    bg: "#1E1B4B",
+    chartColor: "#818CF8",
     restricted: false,
   },
   zakat_al_fitr: {
     label: "Zakat al-Fitr",
     description: "Obligatory end-of-Ramadan charity (fitrana)",
-    color: "#9A3412",
-    bg: "#FFF7ED",
+    color: "#FB923C",
+    bg: "#431407",
+    chartColor: "#FB923C",
     restricted: true,
   },
   fidya: {
     label: "Fidya",
     description: "Compensation for missed fasts",
-    color: "#9D174D",
-    bg: "#FDF2F8",
+    color: "#F472B6",
+    bg: "#500724",
+    chartColor: "#F472B6",
     restricted: true,
   },
   kaffarah: {
     label: "Kaffarah",
     description: "Expiation for broken oaths or fasts",
-    color: "#9D174D",
-    bg: "#FDF2F8",
+    color: "#E879F9",
+    bg: "#4A044E",
+    chartColor: "#E879F9",
     restricted: true,
   },
   waqf: {
     label: "Waqf",
     description: "Islamic endowment (perpetual)",
-    color: "#5B21B6",
-    bg: "#F5F3FF",
+    color: "#A78BFA",
+    bg: "#2E1065",
+    chartColor: "#A78BFA",
     restricted: true,
   },
   general: {
     label: "General",
     description: "General donation",
-    color: "#334155",
-    bg: "#F8FAFC",
+    color: "#9CA3AF",
+    bg: "#1F2937",
+    chartColor: "#9CA3AF",
     restricted: false,
   },
   uncategorised: {
     label: "Uncategorised",
     description: "Awaiting classification by treasurer",
-    color: "#92400E",
-    bg: "#FEFCE8",
+    color: "#FBBF24",
+    bg: "#422006",
+    chartColor: "#FBBF24",
     restricted: false,
   },
 }

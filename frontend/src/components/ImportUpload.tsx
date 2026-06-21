@@ -99,20 +99,17 @@ export function ImportUpload() {
             <SummaryTile
               label="Classified"
               value={result.summary.classifiedCount}
-              color="text-green-700"
-              bg="bg-green-50"
+              variant="success"
             />
             <SummaryTile
               label="Needs review"
               value={result.summary.uncategorisedCount}
-              color="text-amber-700"
-              bg="bg-amber-50"
+              variant="warning"
             />
             <SummaryTile
               label="Errors"
               value={result.summary.errorCount}
-              color="text-red-700"
-              bg="bg-red-50"
+              variant="destructive"
             />
           </div>
 
@@ -133,13 +130,13 @@ export function ImportUpload() {
           {/* Uncategorised — need treasurer action */}
           {result.uncategorised.length > 0 && (
             <section>
-              <h2 className="mb-1 text-sm font-semibold uppercase tracking-widest text-amber-700">
+              <h2 className="mb-1 text-sm font-semibold uppercase tracking-widest text-warning">
                 Needs classification
               </h2>
               <p className="mb-3 text-xs text-muted-foreground">
                 These are currently excluded from all fund balances.
               </p>
-              <div className="rounded-lg border border-dashed border-amber-300 divide-y divide-amber-100 overflow-hidden">
+              <div className="rounded-lg border border-dashed border-warning/50 divide-y divide-warning/20 overflow-hidden">
                 {result.uncategorised.map((r) => (
                   <UncategorisedRow
                     key={r.row}
@@ -161,14 +158,14 @@ export function ImportUpload() {
           {/* Errors */}
           {result.errors.length > 0 && (
             <section>
-              <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest text-red-700">
+              <h2 className="mb-3 text-sm font-semibold uppercase tracking-widest text-destructive">
                 Errors
               </h2>
-              <div className="rounded-lg border border-red-200 divide-y divide-red-100 overflow-hidden bg-red-50">
+              <div className="rounded-lg border border-destructive/50 divide-y divide-destructive/20 overflow-hidden bg-destructive/10">
                 {result.errors.map((e) => (
                   <div key={e.row} className="px-4 py-3 text-sm">
-                    <span className="font-medium text-red-900">Row {e.row}:</span>{" "}
-                    <span className="text-red-800">{e.error}</span>
+                    <span className="font-medium text-destructive">Row {e.row}:</span>{" "}
+                    <span className="text-destructive/80">{e.error}</span>
                   </div>
                 ))}
               </div>
@@ -183,17 +180,20 @@ export function ImportUpload() {
 function SummaryTile({
   label,
   value,
-  color,
-  bg,
+  variant,
 }: {
   label: string
   value: number
-  color: string
-  bg: string
+  variant: "success" | "warning" | "destructive"
 }) {
+  const styles = {
+    success: "bg-success/10 text-success",
+    warning: "bg-warning/10 text-warning",
+    destructive: "bg-destructive/10 text-destructive",
+  }
   return (
-    <div className={`rounded-lg border border-border ${bg} px-4 py-3 text-center`}>
-      <p className={`text-2xl font-bold tabular-nums ${color}`}>{value}</p>
+    <div className={`rounded-lg border border-border ${styles[variant]} px-4 py-3 text-center`}>
+      <p className={`text-2xl font-bold tabular-nums`}>{value}</p>
       <p className="mt-0.5 text-xs font-medium text-muted-foreground">{label}</p>
     </div>
   )
@@ -232,19 +232,19 @@ function UncategorisedRow({
 }) {
   if (isClassified) {
     return (
-      <div className="flex items-center gap-3 bg-green-50 px-4 py-3">
-        <span className="text-green-700 text-sm">✓</span>
+      <div className="flex items-center gap-3 bg-success/10 px-4 py-3">
+        <span className="text-success text-sm">✓</span>
         <span className="text-sm tabular-nums font-medium">{formatPence(record.amountPence)}</span>
         {record.donorRef && (
           <span className="text-xs text-muted-foreground">{record.donorRef}</span>
         )}
-        <span className="ml-auto text-xs text-green-700 font-medium">Classified</span>
+        <span className="ml-auto text-xs text-success font-medium">Classified</span>
       </div>
     )
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-3 bg-amber-50/60 px-4 py-3">
+    <div className="flex flex-wrap items-center gap-3 bg-warning/10 px-4 py-3">
       <div className="flex items-center gap-2 min-w-0">
         <span className="text-sm tabular-nums font-medium shrink-0">
           {formatPence(record.amountPence)}

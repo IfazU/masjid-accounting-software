@@ -2,8 +2,8 @@ import type { Metadata } from "next"
 import { Inter, Lora } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/sonner"
-import { NavBar } from "@/components/NavBar"
-import { TreasuryProvider } from "@/lib/demoStore"
+import { ThemeProvider } from "@/components/theme-provider"
+import { AppShell } from "@/components/layout/AppShell"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,17 +20,21 @@ const lora = Lora({
 export const metadata: Metadata = {
   title: "Masjid Treasury",
   description: "Donation accounting and treasury management",
+  colorScheme: "dark",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${lora.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
-        <NavBar />
-        <TreasuryProvider>
-          <main className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 lg:px-8 flex-1">{children}</main>
-        </TreasuryProvider>
-        <Toaster position="bottom-right" />
+    <html
+      lang="en"
+      className={`dark ${inter.variable} ${lora.variable} h-full antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="min-h-full bg-background text-foreground">
+        <ThemeProvider>
+          <AppShell>{children}</AppShell>
+          <Toaster position="bottom-right" />
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -11,7 +11,7 @@ export function CauseProgressCard({ progress }: CauseProgressCardProps) {
   const hasTarget = progress.targetPence !== null
 
   return (
-    <div className="rounded-lg border border-border bg-card p-5 shadow-sm">
+    <div className="rounded-lg border border-border bg-card p-5 shadow-card">
       <div className="flex items-baseline justify-between gap-4">
         <h3 className="font-semibold text-foreground">{progress.name}</h3>
         <span className="shrink-0 text-sm tabular-nums text-muted-foreground">
@@ -36,7 +36,7 @@ export function CauseProgressCard({ progress }: CauseProgressCardProps) {
           </div>
           <p className="mt-1.5 text-xs text-muted-foreground">
             {pct >= 100 ? (
-              <span className="text-green-700 font-medium">Target reached</span>
+              <span className="text-success font-medium">Target reached</span>
             ) : (
               <>{pct.toFixed(1)}% funded</>
             )}
