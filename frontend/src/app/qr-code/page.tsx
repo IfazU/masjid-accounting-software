@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { ExternalLink } from "lucide-react"
 import { QRCodeSVG } from "qrcode.react"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 
 const donateUrl = "https://masjid-accounting-software.vercel.app/donate"
 
@@ -28,11 +28,14 @@ export default function QrCodePage() {
         </div>
         <p className="mt-6 text-sm font-medium text-foreground">Donate to the masjid</p>
         <p className="mt-1 break-all text-xs text-muted-foreground">{donateUrl}</p>
-        <Button asChild className="mt-6">
-          <Link href={donateUrl} target="_blank" rel="noreferrer">
-            Open donation page <ExternalLink className="ml-2 h-4 w-4" />
-          </Link>
-        </Button>
+        <Link
+          href={donateUrl}
+          target="_blank"
+          rel="noreferrer"
+          className={buttonVariants({ className: "mt-6" })}
+        >
+          Open donation page <ExternalLink className="ml-2 h-4 w-4" />
+        </Link>
       </section>
     </div>
   )
