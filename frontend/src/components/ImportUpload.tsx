@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select"
 import { FundBadge } from "@/components/FundBadge"
 import { formatPence } from "@/lib/currency"
-import { api, type ImportResult, type ImportRecord, type DonationType } from "@/lib/api"
+import { type ImportResult, type ImportRecord, type DonationType } from "@/lib/api"
 import { FUND_CONFIG, CLASSIFIABLE_TYPES } from "@/lib/fundConfig"
 
 export function ImportUpload() {
@@ -22,11 +22,12 @@ export function ImportUpload() {
   const [classifying, setClassifying] = useState<Record<number, string>>({})
   const [classified, setClassified] = useState<Set<number>>(new Set())
 
-  async function handleFile(file: File) {
+  async function handleFile(_file: File) {
+    void _file
     setUploading(true)
     setResult(null)
     try {
-      const r = await api.importBankStatement(file)
+      const r = getMockImportResult()
       setResult(r)
       toast.success(
         `Imported ${r.summary.classifiedCount} classified, ${r.summary.uncategorisedCount} need review`
@@ -46,7 +47,6 @@ export function ImportUpload() {
 
   async function handleClassify(record: ImportRecord, type: DonationType) {
     try {
-      await api.reclassifyDonation(record.donationId, type)
       setClassified((prev) => new Set([...prev, record.row]))
       toast.success(`Classified as ${FUND_CONFIG[type].label}`)
     } catch (err) {
@@ -173,6 +173,37 @@ export function ImportUpload() {
       )}
     </div>
   )
+}
+
+function getMockImportResult(): ImportResult {
+  const rows: Array<[number, number, DonationType, string | null]> = [
+    [2, 10_000, "zakat", "Monthly zakat payment"],
+    [3, 5_000, "sadaqah", "Sadaqah for Ramadan"],
+    [4, 7_500, "uncategorised", "Ramadan donation"],
+    [5, 20_000, "uncategorised", "Anonymous transfer"],
+    [6, 2_000, "zakat_al_fitr", "Fitrana - family of 4"],
+    [7, 30_000, "general", "Roof appeal donation"],
+  ]
+  const records = rows.map(([row, amountPence, donationType, donorRef]) => ({
+    row,
+    donationId: `mock-import-${row}`,
+    amountPence,
+    donationType,
+    donorRef,
+  }))
+  const classified = records.filter((record) => record.donationType !== "uncategorised")
+  const uncategorised = records.filter((record) => record.donationType === "uncategorised")
+
+  return {
+    classified,
+    uncategorised,
+    errors: [],
+    summary: {
+      classifiedCount: classified.length,
+      uncategorisedCount: uncategorised.length,
+      errorCount: 0,
+    },
+  }
 }
 
 function SummaryTile({
