@@ -8,13 +8,17 @@ import {
   LayoutDashboard,
   PlusCircle,
   Upload,
+  QrCode,
   Palette,
+  Presentation,
 } from "lucide-react"
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/donations/new", label: "Record Donation", icon: PlusCircle },
   { href: "/import", label: "Import Statement", icon: Upload },
+  { href: "/qr-code", label: "QR Code", icon: QrCode },
+  { href: "/info", label: "Our Story", icon: Presentation },
   { href: "/styleguide", label: "Style Guide", icon: Palette },
 ]
 
@@ -22,6 +26,8 @@ const breadcrumbMap: Record<string, string> = {
   "/": "Dashboard",
   "/donations/new": "Record Donation",
   "/import": "Import Statement",
+  "/qr-code": "QR Code",
+  "/info": "Our Story",
   "/styleguide": "Style Guide",
 }
 
