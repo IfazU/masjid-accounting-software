@@ -20,7 +20,7 @@ const robotoMono = Roboto_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Masjid Treasury",
+  title: "Noor Treasury",
   description: "Donation accounting and treasury management",
   colorScheme: "dark",
 }

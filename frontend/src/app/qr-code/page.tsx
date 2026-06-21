@@ -23,7 +23,7 @@ export default function QrCodePage() {
             size={256}
             level="M"
             includeMargin
-            title="QR code linking to the Masjid Treasury donation page"
+            title="QR code linking to the Noor Treasury donation page"
           />
         </div>
         <p className="mt-6 text-sm font-medium text-foreground">Donate to the masjid</p>

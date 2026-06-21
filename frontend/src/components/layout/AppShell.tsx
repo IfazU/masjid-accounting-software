@@ -11,6 +11,9 @@ import {
   QrCode,
   Palette,
   Presentation,
+  CheckSquare,
+  BarChart3,
+  TrendingUp,
 } from "lucide-react"
 
 const navItems = [
@@ -20,6 +23,12 @@ const navItems = [
   { href: "/qr-code", label: "QR Code", icon: QrCode },
   { href: "/info", label: "Our Story", icon: Presentation },
   { href: "/styleguide", label: "Style Guide", icon: Palette },
+]
+
+const adminItems = [
+  { label: "Approvals", icon: CheckSquare },
+  { label: "Reporting", icon: BarChart3 },
+  { label: "Forecast", icon: TrendingUp },
 ]
 
 const breadcrumbMap: Record<string, string> = {
@@ -38,6 +47,15 @@ interface AppShellProps {
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname()
   const breadcrumb = breadcrumbMap[pathname] ?? "Dashboard"
+  const isPublicPage = pathname === "/donate"
+
+  if (isPublicPage) {
+    return (
+      <main className="min-h-screen px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">{children}</div>
+      </main>
+    )
+  }
 
   return (
     <TooltipProvider delay={0}>
@@ -46,7 +64,7 @@ export function AppShell({ children }: AppShellProps) {
         <div className="flex h-14 items-center gap-2 border-b border-sidebar-border px-5">
           <span className="text-xl leading-none" aria-hidden>☽</span>
           <span className="text-base font-semibold tracking-tight text-primary">
-            Masjid Treasury
+            Noor Treasury
           </span>
         </div>
 
@@ -69,6 +87,20 @@ export function AppShell({ children }: AppShellProps) {
               </Link>
             )
           })}
+
+          {adminItems.map(({ label, icon: Icon }) => (
+            <div
+              key={label}
+              aria-disabled="true"
+              className="flex cursor-not-allowed items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground/60"
+            >
+              <Icon className="h-4 w-4 shrink-0" />
+              <span>{label}</span>
+              <span className="ml-auto rounded-full bg-sidebar-accent px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+                Soon
+              </span>
+            </div>
+          ))}
         </nav>
       </aside>
 
